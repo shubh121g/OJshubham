@@ -7,11 +7,16 @@ const jwt = require('jsonwebtoken');
 bodyParser = require('body-parser');
 const User = require('./model/User.js');
 var cookieParser = require('cookie-parser')
+var cors = require('cors')
+
+ 
+
 
 DBConnection();
 const PORT = process.env.PORT || 8000;
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 app.get('/',(req,res)=>{
     res.send("Welcome")
 });
