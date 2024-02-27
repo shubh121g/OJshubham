@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from './Login'
 import Register from './Register'
+import Compiler from './Compiler'
 
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 
@@ -33,6 +34,7 @@ export default function Home(){
     <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-12">
       <Link to="/login"  className="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></Link>
       <Link to="/register"  className="text-sm font-semibold leading-6 text-gray-900">Sign up <span aria-hidden="true">&rarr;</span></Link>
+      <Link to="/compiler"  className="text-sm font-semibold leading-6 text-gray-900">Compiler <span aria-hidden="true">&rarr;</span></Link>
      
     </div>
     
@@ -43,6 +45,7 @@ export default function Home(){
 <Routes>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/compiler" element={<Compiler/>}/>
         <Route/>
 
     </Routes>

@@ -12,6 +12,8 @@ var cors = require('cors');
 const Submission = require('./model/Submission.js');
 const Testcase = require('./model/Testcase.js');
 
+const { generateFile } = require('./generateFile.js')
+const  {executeCpp} =require( './executecpp.js')
  
 
 
@@ -65,6 +67,37 @@ console.log({firstname,lastname, email,password });
 
 }
 )
+
+app.post("/run",async (req,res)=>{
+   
+
+    const {language='cpp',code} = req.body
+    console.log(req.body+"inside run")
+
+    if(code==undefined){
+        res.status(400).json({
+            success:true,
+            message:"Empty code body "
+        }
+        )
+    }
+
+    try{
+        const filepath = await generateFile(language,code)
+        const output = await executeCpp(filepath);
+
+        console.log(filepath);
+        console.log(output);
+        res.json({
+            filepath,
+            output
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
+
+})
 
 app.post("/login",async (req,res)=>{
     const {email,password }= req.body;
