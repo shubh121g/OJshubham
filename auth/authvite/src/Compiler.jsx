@@ -4,10 +4,13 @@ import axios from 'axios';
 export default function Compiler(){
 
     const [output,setOutput] = React.useState("");
+    const [input,setInput] = React.useState("");
     const [codebody , setCodebody] = React.useState({
         language:"cpp",
-        code:""
+        code:"",
+        input:" "
     });
+    console.log(codebody.input)
 
     function handleChange(event){
         const {name , value  } = event.target;
@@ -51,6 +54,8 @@ export default function Compiler(){
        </div>
    </div>
 </form>
+
+<textarea className=" border-t dark:border-blue-600" name="input" value={codebody.input} onChange={handleChange}></textarea>
 
 <h2>{output}</h2>
 

@@ -13,7 +13,6 @@ const generateFile = async (format, content) => {
     const filename = `${jobID}.${format}`;
     const filePath = path.join(dirCodes, filename);
     await fs.writeFileSync(filePath, content);
-    //console.log(filePath);
     return filePath;
 };
 

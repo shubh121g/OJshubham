@@ -13,7 +13,8 @@ const Submission = require('./model/Submission.js');
 const Testcase = require('./model/Testcase.js');
 
 const { generateFile } = require('./generateFile.js')
-const  {executeCpp} =require( './executecpp.js')
+const { generateInputfile } = require('./generateInputfile.js')
+const  {executecpp} =require( './executecpp.js')
  
 
 
@@ -71,8 +72,8 @@ console.log({firstname,lastname, email,password });
 app.post("/run",async (req,res)=>{
    
 
-    const {language='cpp',code} = req.body
-    console.log(req.body+"inside run")
+    const {language='cpp',code,input} = req.body
+   
 
     if(code==undefined){
         res.status(400).json({
@@ -84,10 +85,12 @@ app.post("/run",async (req,res)=>{
 
     try{
         const filepath = await generateFile(language,code)
-        const output = await executeCpp(filepath);
+        const inputpath = await generateInputfile(input)
+       
+        const output = await executecpp(filepath,inputpath);
+        
 
-        console.log(filepath);
-        console.log(output);
+       
         res.json({
             filepath,
             output
