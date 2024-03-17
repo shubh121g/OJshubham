@@ -2,6 +2,8 @@ import React from 'react'
 import Login from './Login'
 import Register from './Register'
 import Compiler from './Compiler'
+import Problems from './Problems'
+import ProblemDetail from './ProblemDetail'
 
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 
@@ -26,7 +28,7 @@ export default function Home(){
    
     <div className="hidden lg:flex lg:gap-x-12">
     
-      <a href="#" className="text-sm font-semibold leading-6 text-gray-900">About</a>
+      <Link  to="/problems" className="text-sm font-semibold leading-6 text-gray-900">Problems</Link>
    
     </div>
     
@@ -46,7 +48,8 @@ export default function Home(){
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/compiler" element={<Compiler/>}/>
-        <Route/>
+        <Route path="/problems" element={<Problems/>}/>
+        <Route path="/problems/:id" element={<ProblemDetail/>} />
 
     </Routes>
 
