@@ -4,6 +4,8 @@ import Register from './Register'
 import Compiler from './Compiler'
 import Problems from './Problems'
 import ProblemDetail from './ProblemDetail'
+import AddProblem from './AddProblem'
+import Testcasedetails from './Testcasedetails'
 
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 
@@ -37,6 +39,8 @@ export default function Home(){
       <Link to="/login"  className="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></Link>
       <Link to="/register"  className="text-sm font-semibold leading-6 text-gray-900">Sign up <span aria-hidden="true">&rarr;</span></Link>
       <Link to="/compiler"  className="text-sm font-semibold leading-6 text-gray-900">Compiler <span aria-hidden="true">&rarr;</span></Link>
+      <Link to="/addProblem"  className="text-sm font-semibold leading-6 text-gray-900">Add Problem <span aria-hidden="true">&rarr;</span></Link>
+
      
     </div>
     
@@ -49,7 +53,9 @@ export default function Home(){
         <Route path="/register" element={<Register/>}/>
         <Route path="/compiler" element={<Compiler/>}/>
         <Route path="/problems" element={<Problems/>}/>
+        <Route path="/addProblem" element={<AddProblem/>}/>
         <Route path="/problems/:id" element={<ProblemDetail/>} />
+        <Route path="/testcases/:pid" element={<Testcasedetails/>}/>
 
     </Routes>
 

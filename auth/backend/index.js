@@ -17,6 +17,7 @@ const { generateInputfile } = require('./generateInputfile.js')
 const  {executecpp} =require( './executecpp.js')
 
 const {prouter} = require('./controller/problemController.js')
+const {trouter} = require('./controller/testcaseController.js')
 
  
 
@@ -72,6 +73,8 @@ console.log({firstname,lastname, email,password });
 }
 )
 app.use('/problems',prouter);
+app.use('/testcase',trouter);
+
 
 app.post("/run",async (req,res)=>{
    

@@ -3,6 +3,7 @@ import { useEffect , useState} from 'react';
 import { useParams,Link } from 'react-router-dom';
 import axios from 'axios';
 import Compiler from './Compiler';
+import Testcase from './Testcase'
 
 
 export default function ProblemDetail(){
@@ -66,6 +67,9 @@ export default function ProblemDetail(){
 
                
             ):<h2>Loading...</h2>}
+
+            <Testcase pid={id}/>
+            <Link to={`/testcases/${id}`}> View all </Link>
        
         </div>
     );
