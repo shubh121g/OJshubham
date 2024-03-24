@@ -16,10 +16,17 @@ const { generateFile } = require('./generateFile.js')
 const { generateInputfile } = require('./generateInputfile.js')
 const  {executecpp} =require( './executecpp.js')
 
+const getProblemtestcases = async (pid)=>{
+    console.log(pid+" pid");
+  const arr = await app.get(`http://localhost:8080/testcase/${pid}`)
+  console.log(arr);
+  return arr
+ }
+
 const {prouter} = require('./controller/problemController.js')
 const {trouter} = require('./controller/testcaseController.js')
 
- 
+
 
 
 DBConnection();
@@ -31,10 +38,12 @@ app.get('/',(req,res)=>{
     res.send("Welcome")
 });
 
+
+
 app.post("/register",async (req,res)=>{
     try{
         const {firstname,lastname, email,password }= req.body;
-console.log({firstname,lastname, email,password });
+
     if(!(firstname || lastname || email || password)){
        return res.status(400).send("Please enter all the field")
     }
@@ -150,16 +159,22 @@ app.post("/login",async (req,res)=>{
      }
 
 
-})
+}) 
 
-app.post("/submitsol",async (req,res)=>{
+app.post("/submit",async (req,res)=>{
+    console.log(req.body);
     try{
-        const {pid,uid,code,verdict} = req.body;
+        const {pid,uid,code,uname,language} = req.body.subbody;
+       const ss =await  getProblemtestcases(pid);
+
+        
         const subData = await Submission.create({
+            language,
+            uname ,
             pid,
             uid,
             code,
-            verdict
+            verdict:true
     
         })
 
@@ -173,67 +188,9 @@ app.post("/submitsol",async (req,res)=>{
     }
 })
 
-app.post("/addtestcase",async (req,res)=>{
-    try{
-        const {pid,inputs,outputs} = req.body;
-        const tData = await Testcase.create({
-            pid,
-            inputs,
-            outputs
-    
-        })
 
-        res.status(200).json({
-            "mesage":"Good job",
-            tData
-        })
 
-    }catch(e){
-        res.status(400).send(e);
-    }
-})
 
-app.post("/addproblem",async (req,res)=>{
-    try{
-        const {title,description,difficulty,tags}= req.body;
-
-        if (!(title && description && difficulty )){
-            res.status(400).send('Enter all the fields');
-    
-        }
-
-        const isProblemExist = await Problem.findOne({title});
-        if(isProblemExist){
-            res.status(400).send("Title already exists")
-        }
-        else{
-            let tt=[]
-            if(tags){
-                 tt = tags.split(/[ ,]+/);
-            }
-        
-            console.log(tt);
-        
-            const problemData = await Problem.create({
-                title,
-                description,
-                difficulty,
-                tags:tt
-        
-            })
-            
-           
-            console.log(req.body);
-            res.status(200).json(problemData);
-
-        }
-       
-
-    }catch(e){
-        res.status(400).send(e);
-    }
-   
-})
 
 app.listen(PORT,()=>{
     console.log("Server listening on 8080")

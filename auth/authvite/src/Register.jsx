@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function  Register(){
 
@@ -9,6 +12,8 @@ const [regv , setRegister] = React.useState({
     email:"",
     password:""
 })
+
+const [isRegistered, setIsRegistered] = React.useState(false);
 
 function handleChange(event){
     const {name , value , type } = event.target;
@@ -23,7 +28,20 @@ function handleChange(event){
 function submitreg(e){
 e.preventDefault();
 console.log(regv);
-axios.post('http://localhost:8080/register',regv).then((res)=>console.log(res)).catch((e)=>{
+axios.post('http://localhost:8080/register',regv).then((res)=>{
+  const msg = res.data.message;
+
+  if(msg=='Succesfully registered'){
+    toast.success('Registration was successful');
+    setIsRegistered(true);
+    if (isRegistered) {
+      // Redirect to the login page after successful registration
+      return <Navigate to="/login" />
+    }
+
+  }
+
+}).catch((e)=>{
     console.log(e);
 })
 }
@@ -106,6 +124,7 @@ axios.post('http://localhost:8080/register',regv).then((res)=>console.log(res)).
     </p>
   </div>
 </div>
+<ToastContainer />
 
         </div>
     )

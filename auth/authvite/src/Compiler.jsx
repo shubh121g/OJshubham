@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 
-export default function Compiler(){
+export default function Compiler(props){
 
     const [output,setOutput] = React.useState("");
     const [input,setInput] = React.useState("");
@@ -10,7 +10,10 @@ export default function Compiler(){
         code:"",
         input:" "
     });
-    console.log(codebody.input)
+    const uid=props.uid;
+    const uname=props.uname;
+    const pid=props.pid;
+    console.log(props)
 
     function handleChange(event){
         const {name , value  } = event.target;
@@ -23,7 +26,7 @@ export default function Compiler(){
     
     }
 
-    function submitcode(e){
+    function runcode(e){
         e.preventDefault();
        // const {code} = e.target;
         console.log({...codebody});
@@ -33,6 +36,24 @@ export default function Compiler(){
     }).catch((e)=>{
             console.log(e);
         })}
+
+    function submitcode(e){
+        e.preventDefault();
+        console.log(pid+" "+uname);
+        const subbody ={
+            code : codebody.code,
+            language : codebody.language,
+           uid,
+           uname,
+           pid
+
+        }
+        console.log(subbody);
+        axios.post('http://localhost:8080/submit',{subbody
+
+        }).then((data)=>{console.log(data)})
+
+    }
         
 
     return (
@@ -44,8 +65,11 @@ export default function Compiler(){
            <textarea id="code"  name="code" value={codebody.code} rows="4" onChange={handleChange} className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write your cpp code..." required />
        </div>
        <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-           <button type="submit" onClick={submitcode} className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+           <button type="submit" onClick={runcode} className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                Run
+           </button>
+           <button type="submit" onClick={submitcode} className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+               Submit
            </button>
           
              

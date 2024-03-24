@@ -1,11 +1,17 @@
 import React from 'react'
 import axios from 'axios';
-export default function  Login(){
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export default function  Login(props){
 
 const [logv , setlogin] = React.useState({
     email:"",
     password:""
 })
+
+const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
 
 function handleChange(event){
     const {name , value , type } = event.target;
@@ -19,7 +25,16 @@ function handleChange(event){
 
 function submitlog(e){
 e.preventDefault();
-axios.post('http://localhost:8080/login',logv).then((res)=>console.log(res)).catch((e)=>{
+axios.post('http://localhost:8080/login',logv).then((res)=>{
+  
+console.log(res);
+const logg =res.data.message;
+if(logg === "Logged in"){
+  setIsLoggedIn(true);
+  toast.success('You have successfully logged in!');
+  props.userlogged(res.data);
+}
+}).catch((e)=>{
     console.log(e);
 })
 
@@ -83,8 +98,10 @@ axios.post('http://localhost:8080/login',logv).then((res)=>console.log(res)).cat
       Not a member?
       <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign up today</a>
     </p>
+    <p>{props.user}</p>
   </div>
 </div>
+<ToastContainer />
 
         </div>
     )

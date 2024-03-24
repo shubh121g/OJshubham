@@ -3,7 +3,9 @@ const Testcase = require('../model/Testcase')
 
 const  getTestcases = (async(req,res)=>{
     try{
+        console.log("Inside get testcases");
         const pid = (req.params.pid);
+        console.log("Inside get testcases"+pid);
         const alltestcases = await Testcase.find({pid})
         res.status(200).json(alltestcases)
     }catch(e){

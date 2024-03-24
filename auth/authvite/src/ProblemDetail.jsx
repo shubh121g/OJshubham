@@ -6,11 +6,15 @@ import Compiler from './Compiler';
 import Testcase from './Testcase'
 
 
-export default function ProblemDetail(){
+export default function ProblemDetail(props){
 
     const param = useParams();
     let id = param.id;
     const [Pdetail , setPdetail]=useState(null);
+    const uname = props.uname;
+    const uid = props.uid;
+    console.log(uid+"uid");
+    console.log(uname+"uname")
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/problems/${id}`).then(res=>{setPdetail(res.data);console.log(res.data);})
@@ -56,7 +60,7 @@ export default function ProblemDetail(){
           </dl>
         </div>
       </div>
-      <Compiler  className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"width="2432" height="1442"/>
+      <Compiler  className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"width="2432" height="1442"  pid={id} uname={uname} uid={uid}/>
     </div>
   </div>
 </div>
@@ -69,7 +73,8 @@ export default function ProblemDetail(){
             ):<h2>Loading...</h2>}
 
             <Testcase pid={id}/>
-            <Link to={`/testcases/${id}`}> View all </Link>
+         
+            <Link to={`/testcases/${id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline"> View all </Link>
        
         </div>
     );
