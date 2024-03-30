@@ -39,6 +39,9 @@ if(logg === "Logged in"){
   return (<Navigate to="/register"/>);
   }catch(e){console.log(e)}
 }
+else{
+  toast.error('Incorrect combination of password and email id');
+}
 }).catch((e)=>{
     console.log(e);
 })
