@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { Navigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function  Login(props){
@@ -19,13 +20,13 @@ function handleChange(event){
         return {...prev,
         [name]:value}
     })
-    console.log(logv);
+   
 
 }
 
 function submitlog(e){
 e.preventDefault();
-axios.post('http://localhost:8080/login',logv).then((res)=>{
+axios.post(import.meta.env.VITE_BACKEND_URL+'/login',logv).then((res)=>{
   
 console.log(res);
 const logg =res.data.message;
@@ -33,12 +34,18 @@ if(logg === "Logged in"){
   setIsLoggedIn(true);
   toast.success('You have successfully logged in!');
   props.userlogged(res.data);
+  try{
+    
+  return (<Navigate to="/register"/>);
+  }catch(e){console.log(e)}
 }
 }).catch((e)=>{
     console.log(e);
 })
 
 }
+
+if(isLoggedIn){return <Navigate to="/userdetails"/>}
 
     return(
         <div>

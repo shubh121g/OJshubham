@@ -8,7 +8,7 @@ export default function Problems(){
      const [ln , setProblen] = React.useState(0);
 
      React.useEffect(()=>{
-        axios.get('http://localhost:8080/problems').then(
+        axios.get(import.meta.env.VITE_BACKEND_URL+'/problems').then(
             res => res.data
         ).then(dt => setProbs(dt))
         
@@ -21,6 +21,7 @@ export default function Problems(){
             diff = {prob.difficulty}
             subcount ={prob.subcount}
             idd ={prob._id}
+           
             />
 
         )

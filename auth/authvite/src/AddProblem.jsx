@@ -15,14 +15,15 @@ export default function AddProblem(){
             return {...prev,
             [name]:value}
         })
-        console.log(probv);
+        
     
     }
     
     function submitprob(e){
     e.preventDefault();
-    console.log(probv);
-    axios.post('http://localhost:8080/problems',probv).then((res)=>console.log(res)).catch((e)=>{
+   
+   
+    axios.post(import.meta.env.VITE_BACKEND_URL+'/problems',probv).then((res)=>console.log(res)).catch((e)=>{
         console.log(e);
     })
     }

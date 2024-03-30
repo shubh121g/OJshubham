@@ -32,9 +32,13 @@ const deleteOnetest = (async (req,res)=>{
 
     try {
         const deletedtest  = await Testcase.findByIdAndDelete(tid);
-        res.status(200).json(deletedtest);
-    }catch(e){
-        res.status(400).json(e);
+        if(!deletedtest){
+            return res.status(404).json({ error: 'Document not found' });
+        }
+        res.status(200).json({message:"delete hua sahi se"});
+    }catch(error){
+        console.error("Error deleting document:", error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 })
 

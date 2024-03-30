@@ -21,14 +21,14 @@ function handleChange(event){
         return {...prev,
         [name]:value}
     })
-    console.log(regv);
+    
 
 }
 
 function submitreg(e){
 e.preventDefault();
 console.log(regv);
-axios.post('http://localhost:8080/register',regv).then((res)=>{
+axios.post(import.meta.env.VITE_BACKEND_URL+'/register',regv).then((res)=>{
   const msg = res.data.message;
 
   if(msg=='Succesfully registered'){

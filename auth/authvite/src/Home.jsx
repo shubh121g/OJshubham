@@ -6,6 +6,9 @@ import Problems from './Problems'
 import ProblemDetail from './ProblemDetail'
 import AddProblem from './AddProblem'
 import Testcasedetails from './Testcasedetails'
+import UserDetail from './UserDetail'
+import AuthRequired from './AuthRequired'
+import Sec from './Sec'
 
 
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
@@ -52,7 +55,7 @@ export default function Home(){
     
     
     <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-12">
-      {islogged ?<p> Hi {username}</p> : <div>
+      {islogged ?<Link to="/userdetails"><p> Hi {username}</p> </Link> : <div>
       <Link to="/login"  className="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></Link>
       
       <Link to="/register"  className="text-sm font-semibold leading-6 text-gray-900">Sign up <span aria-hidden="true">&rarr;</span></Link>
@@ -69,14 +72,21 @@ export default function Home(){
  
 </header>
 <Routes>
-        <Route path="/login" 
+<Route path="/login" 
         element={<Login  userlogged={userlogged} />}/>
         <Route path="/register" element={<Register/>}/>
+      <Route element={<AuthRequired haslogged={islogged}/>} >
+       
+        <Route path="/userdetails"  element={<UserDetail uid={userid} />}/>
         <Route path="/compiler" element={<Compiler/>}/>
         <Route path="/problems" element={<Problems />}/>
         <Route path="/addProblem" element={<AddProblem/>}/>
         <Route path="/problems/:id" element={<ProblemDetail uname={username} uid={userid} />} />
         <Route path="/testcases/:pid" element={<Testcasedetails/>}/>
+        {/* <Route path="/user" element={<AuthRequired/>}  uid={userid}>
+          <Route  element={<Sec/>}></Route>
+        </Route> */}
+        </Route>
 
     </Routes>
 

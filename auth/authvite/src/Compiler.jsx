@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Compiler(props){
 
@@ -13,11 +15,12 @@ export default function Compiler(props){
     const uid=props.uid;
     const uname=props.uname;
     const pid=props.pid;
-    console.log(props)
+    const mark =props.mark;
+    
 
     function handleChange(event){
         const {name , value  } = event.target;
-        console.log(value)
+       
         setCodebody((prev)=>{
             return {...prev,
             [name]:value}
@@ -29,9 +32,9 @@ export default function Compiler(props){
     function runcode(e){
         e.preventDefault();
        // const {code} = e.target;
-        console.log({...codebody});
+        
 
-        axios.post('http://localhost:8080/run',codebody).then((res)=>{ setOutput(res.data.output);
+        axios.post(import.meta.env.VITE_BACKEND_URL+'/run',codebody).then((res)=>{ setOutput(res.data.output);
     console.log({...res});
     }).catch((e)=>{
             console.log(e);
@@ -39,7 +42,7 @@ export default function Compiler(props){
 
     function submitcode(e){
         e.preventDefault();
-        console.log(pid+" "+uname);
+       
         const subbody ={
             code : codebody.code,
             language : codebody.language,
@@ -48,10 +51,26 @@ export default function Compiler(props){
            pid
 
         }
-        console.log(subbody);
-        axios.post('http://localhost:8080/submit',{subbody
+       
+        axios.post(import.meta.env.VITE_BACKEND_URL+'/submit',{subbody
 
-        }).then((data)=>{console.log(data)})
+        }).then((data)=>{console.log(data);
+            if(data.data.subData.verdict)
+            {
+                toast.success('You have successfully passed all the tescases!');
+                axios.put(import.meta.env.VITE_BACKEND_URL+`/user/${uid}/${mark}`).then(res=>{console.log(res.data)}).catch(e=>{
+                    console.log(e);
+                    return e;
+                })
+            }
+            else{
+                toast.error(`failed on test case ${data.data.subData.comment}`)
+            }
+         
+        }).catch(e=>{
+            console.log(e);
+            return e;
+        })
 
     }
         
@@ -95,6 +114,7 @@ export default function Compiler(props){
 </div>
 
 <h4>Output {output}</h4>
+<ToastContainer />
 
         </div>
     )

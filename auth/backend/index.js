@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios').default
 const app = express();
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
@@ -15,16 +16,12 @@ const Testcase = require('./model/Testcase.js');
 const { generateFile } = require('./generateFile.js')
 const { generateInputfile } = require('./generateInputfile.js')
 const  {executecpp} =require( './executecpp.js')
+const {getProblemtestcases} = require('./getTestcase.js')
 
-const getProblemtestcases = async (pid)=>{
-    console.log(pid+" pid");
-  const arr = await app.get(`http://localhost:8080/testcase/${pid}`)
-  console.log(arr);
-  return arr
- }
 
 const {prouter} = require('./controller/problemController.js')
-const {trouter} = require('./controller/testcaseController.js')
+const {trouter} = require('./controller/testcaseController.js');
+const { urouter } = require('./controller/userController.js');
 
 
 
@@ -83,6 +80,7 @@ app.post("/register",async (req,res)=>{
 )
 app.use('/problems',prouter);
 app.use('/testcase',trouter);
+app.use('/user', urouter)
 
 
 app.post("/run",async (req,res)=>{
@@ -162,10 +160,34 @@ app.post("/login",async (req,res)=>{
 }) 
 
 app.post("/submit",async (req,res)=>{
-    console.log(req.body);
+   
     try{
         const {pid,uid,code,uname,language} = req.body.subbody;
        const ss =await  getProblemtestcases(pid);
+       const filepath = await generateFile(language,code);
+       let comment ="passed";
+       let v =true;
+       
+      for(let i=0;i<ss.length;i++)
+      {
+        let ip = ss[i].inputs;
+        
+        let inputpath = await generateInputfile(ip);
+        let output = await executecpp(filepath,inputpath);
+        if(output != ss[i].outputs)
+        {
+            comment = `failed on testcase +${i}`;
+          
+            v =false;
+            break;
+        }
+
+      }
+
+      console.log(language +" uname "+uname+" "+pid+" "+uid+" "+code+" "+v+" "+comment);
+    
+       
+       
 
         
         const subData = await Submission.create({
@@ -174,9 +196,13 @@ app.post("/submit",async (req,res)=>{
             pid,
             uid,
             code,
-            verdict:true
+            verdict:v,
+            comment 
+
     
         })
+
+        console.log(subData);
 
         res.status(200).json({
             "mesage":"Good job",

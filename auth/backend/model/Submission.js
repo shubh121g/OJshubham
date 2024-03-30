@@ -31,6 +31,10 @@ const submissionSchema = mongoose.Schema({
     datetime:{
         type:Date,
         default:Date.now
+    },
+    comment:{
+        type:String,
+        required:true
     }
 })
 

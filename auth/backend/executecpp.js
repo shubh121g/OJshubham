@@ -10,6 +10,7 @@ if (!fs.existsSync(outputPath)) {
 }
 
 const executecpp = (filepath, inputPath)  => {
+  console.log("execute cpp me hu");
   
     const jobId = path.basename(filepath).split(".")[0];
     const outPath = path.join(outputPath, `${jobId}.out`);

@@ -8,7 +8,7 @@ export default function Testcard(props){
     const [isdeleted, Deletetest]=useState(false);
 
     function deletetest(){
-      axios.delete(`http://localhost:8080/testcase/case/${props.idd}`).then(res=>{
+      axios.delete(import.meta.env.VITE_BACKEND_URL+`/testcase/case/${props.idd}`).then(res=>{
 
        console.log(res);
        Deletetest(true);

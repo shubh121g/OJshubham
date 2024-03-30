@@ -13,11 +13,10 @@ export default function ProblemDetail(props){
     const [Pdetail , setPdetail]=useState(null);
     const uname = props.uname;
     const uid = props.uid;
-    console.log(uid+"uid");
-    console.log(uname+"uname")
+    
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/problems/${id}`).then(res=>{setPdetail(res.data);console.log(res.data);})
+        axios.get(import.meta.env.VITE_BACKEND_URL+`/problems/${id}`).then(res=>{setPdetail(res.data);console.log(res.data);})
     },[id])
 
 
@@ -60,7 +59,7 @@ export default function ProblemDetail(props){
           </dl>
         </div>
       </div>
-      <Compiler  className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"width="2432" height="1442"  pid={id} uname={uname} uid={uid}/>
+      <Compiler  className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"width="2432" height="1442"  pid={id} uname={uname} uid={uid} mark={Pdetail.difficulty}/>
     </div>
   </div>
 </div>

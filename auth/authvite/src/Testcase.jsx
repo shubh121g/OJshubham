@@ -5,8 +5,8 @@ export default function Testcase(props){
     const probid = props.pid;
 
     const [testv , setTestcase]=React.useState({
-        inputs:" ",
-        outputs:" ",
+        inputs:"",
+        outputs:"",
         pid:probid
     })
 
@@ -16,14 +16,14 @@ export default function Testcase(props){
             return {...prev,
             [name]:value}
         })
-        console.log(testv);
+     
     
     }
     
     function submittest(e){
     e.preventDefault();
     console.log(testv);
-    axios.post(`http://localhost:8080/testcase/${probid}`,testv).then((res)=>console.log(res)).catch((e)=>{
+    axios.post(import.meta.env.VITE_BACKEND_URL+`/testcase/${probid}`,testv).then((res)=>console.log(res)).catch((e)=>{
         console.log(e);
     })
     }

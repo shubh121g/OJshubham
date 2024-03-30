@@ -10,23 +10,34 @@ export default function Testcasedetails(){
     let id = param.pid;
 
     const [alltests, setTestcase] = React.useState([]);
+    const [ntest,setNtest] = React.useState(0);
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/testcase/${id}`).then(res=>{
             setTestcase(res.data);
-            console.log(res.data)
-            console.log(alltests)
+            
+            
         })
 
-    },[])
+    },[ntest])
 
     const testCards = alltests.map(test=>{
-        return(
+        return(<div>
             <Testcard
             inp ={test.inputs}
             out = {test.outputs}
             idd ={test._id}
             />
+            <button onClick={()=>{console.log("kuch chal le"+test._id);
+              axios.delete(import.meta.env.VITE_BACKEND_URL+`/testcase/case/${test._id}`).then(res=>{
+                setNtest((pr)=>pr+1)
+              console.log(res);
+              
+             }).catch(e => {
+                  console.log(e);
+             })
+        }}>Handle it </button>
+            </div>
 
         )
      })
