@@ -75,7 +75,7 @@ export default function AddProblem(){
             </div>
           </div>  
           <div>
-            <label for="difficulty" className="block text-sm font-medium leading-6 text-gray-900">Difficulty</label>
+            <label for="difficulty" className="block text-sm font-medium leading-6 text-gray-900">Marks (1 to 3)</label>
             <div className="mt-2">
               <input id="difficulty" name="difficulty" type="text" 
                         value={probv.difficulty}
