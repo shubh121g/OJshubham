@@ -16,7 +16,7 @@ export default function ProblemDetail(props){
     
 
     useEffect(()=>{
-        axios.get(import.meta.env.VITE_BACKEND_URL+`/problems/${id}`).then(res=>{setPdetail(res.data);console.log(res.data);})
+        axios.get(import.meta.env.VITE_BACKEND_URL+`/problems/${id}`).then(res=>{setPdetail(res.data);console.log(res.data);}).catch((e)=>{console.log(e)})
     },[id])
 
 

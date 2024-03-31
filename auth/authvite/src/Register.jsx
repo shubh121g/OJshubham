@@ -30,6 +30,7 @@ e.preventDefault();
 console.log(regv);
 axios.post(import.meta.env.VITE_BACKEND_URL+'/register',regv).then((res)=>{
   const msg = res.data.message;
+  console.log(msg);
 
   if(msg=='Succesfully registered'){
     toast.success('Registration was successful');
@@ -44,6 +45,11 @@ axios.post(import.meta.env.VITE_BACKEND_URL+'/register',regv).then((res)=>{
 }).catch((e)=>{
     console.log(e);
 })
+}
+
+if (isRegistered) {
+  // Redirect to the login page after successful registration
+  return <Navigate to="/login" />
 }
 
     return(
@@ -65,6 +71,7 @@ axios.post(import.meta.env.VITE_BACKEND_URL+'/register',regv).then((res)=>{
                 /> 
                 <button onClick={submitlog}>Submit</button>
             </form> */}
+           
 
 <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div className="sm:mx-auto sm:w-full sm:max-w-sm">

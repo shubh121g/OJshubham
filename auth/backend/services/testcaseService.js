@@ -28,7 +28,7 @@ const getOnetest = (async (req,res)=>{
 
 const deleteOnetest = (async (req,res)=>{
     const tid = (req.params.testid);
-    res.send("delete one test")
+    
 
     try {
         const deletedtest  = await Testcase.findByIdAndDelete(tid);

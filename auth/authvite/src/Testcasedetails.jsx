@@ -28,15 +28,7 @@ export default function Testcasedetails(){
             out = {test.outputs}
             idd ={test._id}
             />
-            <button onClick={()=>{console.log("kuch chal le"+test._id);
-              axios.delete(import.meta.env.VITE_BACKEND_URL+`/testcase/case/${test._id}`).then(res=>{
-                setNtest((pr)=>pr+1)
-              console.log(res);
-              
-             }).catch(e => {
-                  console.log(e);
-             })
-        }}>Handle it </button>
+         
             </div>
 
         )

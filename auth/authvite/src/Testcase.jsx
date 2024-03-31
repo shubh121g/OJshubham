@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Testcase(props){
     const probid = props.pid;
@@ -23,7 +26,9 @@ export default function Testcase(props){
     function submittest(e){
     e.preventDefault();
     console.log(testv);
-    axios.post(import.meta.env.VITE_BACKEND_URL+`/testcase/${probid}`,testv).then((res)=>console.log(res)).catch((e)=>{
+    axios.post(import.meta.env.VITE_BACKEND_URL+`/testcase/${probid}`,testv).then((res)=>{console.log(res);
+        toast.success('Added new test case');
+    }).catch((e)=>{
         console.log(e);
     })
     }
@@ -65,6 +70,7 @@ export default function Testcase(props){
         </div>
         <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  onClick={submittest}>Submit</button>
         </form>
+        <ToastContainer />
         </div>
     )
 }

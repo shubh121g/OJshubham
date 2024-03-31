@@ -1,5 +1,8 @@
 import React from 'react'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddProblem(){
     const [probv , setProblem] = React.useState({
@@ -23,8 +26,11 @@ export default function AddProblem(){
     e.preventDefault();
    
    
-    axios.post(import.meta.env.VITE_BACKEND_URL+'/problems',probv).then((res)=>console.log(res)).catch((e)=>{
+    axios.post(import.meta.env.VITE_BACKEND_URL+'/problems',probv).then((res)=>{console.log(res);
+      toast.success('Added new problem');
+    }).catch((e)=>{
         console.log(e);
+        toast.error('some error occured while adding new problem');
     })
     }
     
@@ -102,6 +108,7 @@ export default function AddProblem(){
     
       </div>
     </div>
+    <ToastContainer />
     
             </div>
         )
