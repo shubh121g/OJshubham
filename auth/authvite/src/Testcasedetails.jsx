@@ -13,7 +13,7 @@ export default function Testcasedetails(){
     const [ntest,setNtest] = React.useState(0);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/testcase/${id}`).then(res=>{
+        axios.get(import.meta.env.VITE_BACKEND_URL+ `/testcase/${id}`).then(res=>{
             setTestcase(res.data);
             
             
