@@ -23,6 +23,8 @@ const {prouter} = require('./controller/problemController.js')
 const {trouter} = require('./controller/testcaseController.js');
 const { urouter } = require('./controller/userController.js');
 
+const {srouter} = require('./controller/submissionController.js');
+
 
 
 
@@ -80,7 +82,8 @@ app.post("/register",async (req,res)=>{
 )
 app.use('/problems',prouter);
 app.use('/testcase',trouter);
-app.use('/user', urouter)
+app.use('/user', urouter);
+app.use('/submission',srouter);
 
 
 app.post("/run",async (req,res)=>{
@@ -176,7 +179,7 @@ app.post("/submit",async (req,res)=>{
         let output = await executecpp(filepath,inputpath);
         if(output != ss[i].outputs)
         {
-            comment = `failed on testcase +${i}`;
+            comment = `failed on testcase ${i}`;
           
             v =false;
             break;
@@ -184,7 +187,7 @@ app.post("/submit",async (req,res)=>{
 
       }
 
-      console.log(language +" uname "+uname+" "+pid+" "+uid+" "+code+" "+v+" "+comment);
+      
     
        
        

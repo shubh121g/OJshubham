@@ -48,7 +48,7 @@ else{
 
 }
 
-if(isLoggedIn){return <Navigate to="/userdetails"/>}
+if(isLoggedIn){return <Navigate to="/user"/>}
 
     return(
         <div>

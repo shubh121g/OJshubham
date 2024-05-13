@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function UserDetail(props){
 
@@ -38,7 +39,7 @@ useEffect(()=>{
                     <hr className="mt-6" />
                     <div className="flex  bg-gray-50 ">
                         <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
-                            <p><span className="font-semibold">3 </span> Submissions</p>
+                            <p><span className="font-semibold">3 </span> <Link to = {`/submission/user/${uid}`}>Submissions</Link></p>
                         </div>
                         <div className="border"></div>
                         <div className="text-center w-1/2 p-4 hover:bg-gray-100 cursor-pointer">
