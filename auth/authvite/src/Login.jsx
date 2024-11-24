@@ -12,6 +12,22 @@ const [logv , setlogin] = React.useState({
 })
 
 const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+const [token, setToken] = React.useState(null);
+
+const getTokenFromCookie = () => {
+  const cookieString = document.cookie;
+  console.log(cookieString);
+  const cookies = cookieString.split('; ');
+
+  for (const cookie of cookies) {
+    const [name, value] = cookie.split('=');
+    if (name === 'token') {
+      return value;
+    }
+  }
+
+  return null;
+};
 
 
 function handleChange(event){
@@ -28,12 +44,16 @@ function submitlog(e){
 e.preventDefault();
 axios.post(import.meta.env.VITE_BACKEND_URL+'/login',logv).then((res)=>{
   
-console.log(res);
+console.log(res.headers);
 const logg =res.data.message;
 if(logg === "Logged in"){
+  console.log("HO GYA LOGIN")
   setIsLoggedIn(true);
   toast.success('You have successfully logged in!');
   props.userlogged(res.data);
+  console.log(document.cookie+" --");
+  const tokenFromCookie = getTokenFromCookie();
+  setToken(tokenFromCookie);
   try{
     
   return (<Navigate to="/register"/>);

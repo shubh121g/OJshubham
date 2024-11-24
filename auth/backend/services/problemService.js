@@ -3,6 +3,7 @@ const Problem = require('../model/Problem')
 
 const getProblems = (async(req,res)=>{
     try{
+        console.log(req);
         const allproblems = await Problem.find()
         res.status(200).json(allproblems)
     }catch(e){

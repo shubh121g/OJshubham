@@ -25,6 +25,8 @@ const { urouter } = require('./controller/userController.js');
 
 const {srouter} = require('./controller/submissionController.js');
 
+const{crouter} = require('./controller/courseController.js')
+
 
 
 
@@ -84,6 +86,7 @@ app.use('/problems',prouter);
 app.use('/testcase',trouter);
 app.use('/user', urouter);
 app.use('/submission',srouter);
+app.use('/course',crouter);
 
 
 app.post("/run",async (req,res)=>{
@@ -151,7 +154,8 @@ app.post("/login",async (req,res)=>{
 
         res.status(200).cookie("token",token,options).json({
             message:"Logged in",
-            isUserExist
+            isUserExist,
+            token
        })
        }
      }
